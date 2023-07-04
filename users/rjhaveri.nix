@@ -3,6 +3,35 @@
 {
   homebrew = {
     enable = true;
+    brews = [
+      "ansible"
+      "black"
+      "ca-certificates"
+      "cmake"
+      "flux"
+      "git-delta"
+      "gnutls"
+      "gnupg"
+      "helm"
+      "jsonlint"
+      "kubernetes-cli"
+      "linkerd"
+      "lua"
+      "mackup"
+      "mkdocs"
+      "mtr"
+      "nmap"
+      "packer"
+      "pygments"
+      "speedtest"
+      "sshuttle"
+      "terraform-docs"
+      "tfenv"
+      "wget"
+      "xz"
+      "z"
+    ];
+
     casks = [
       "alfred"
       "rectangle"
