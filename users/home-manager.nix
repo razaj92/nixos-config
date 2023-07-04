@@ -39,6 +39,12 @@ in
     pkgs.zoxide
   ];
 
+  # home.file = {
+  #   neovim.source = config.lib.file.mkOutOfStoreSymlink /Users/rjhaveri/.nix-profile/bin/nvim;
+  #   neovim.target = "/usr/local/bin/vi";
+  # };
+
+
   #---------------------------------------------------------------------
   # Env vars and dotfiles
   #---------------------------------------------------------------------
