@@ -9,34 +9,45 @@ in
   #---------------------------------------------------------------------
   # Packages
   #---------------------------------------------------------------------
-  home.packages = [
-    pkgs.awscli
-    pkgs.bat
-    pkgs.coreutils-full
-    pkgs.docutils
-    pkgs.exa
-    pkgs.fd
-    pkgs.fzf
-    pkgs.gdbm
-    pkgs.htop
-    pkgs.ipcalc
-    pkgs.jq
-    pkgs.k9s
-    pkgs.kops
-    pkgs.krew
-    pkgs.kubectx
-    pkgs.lsd
-    pkgs.neovim
-    pkgs.ripgrep
-    pkgs.socat
-    pkgs.tflint
-    pkgs.tmux
-    pkgs.tree
-    pkgs.tree-sitter
-    pkgs.vault
-    pkgs.watch
-    pkgs.yq
-    pkgs.zoxide
+  home.packages = with pkgs;[
+    awscli
+    bat
+    conftest
+    coreutils-full
+    dive
+    docutils
+    exa
+    fd
+    gdbm
+    go-task
+    htop
+    ipcalc
+    jq
+    jqp
+    k9s
+    kops
+    krew
+    kubectx
+    kubent
+    kubetail
+    lsd
+    neovim
+    niv
+    ripgrep
+    socat
+    step-cli
+    stern
+    tflint
+    tmux
+    tree
+    tree-sitter
+    vault
+    watch
+    yq
+    zoxide
+    (google-cloud-sdk.withExtraComponents ([
+      google-cloud-sdk.components.gke-gcloud-auth-plugin
+    ]))
   ];
 
   # home.file = {
@@ -67,10 +78,8 @@ in
     config = {
       whitelist = {
         prefix = [
-          "$HOME/Github"
+          "/Users/rjhaveri/Github/"
         ];
-
-        exact = [ "$HOME/.envrc" ];
       };
     };
   };
