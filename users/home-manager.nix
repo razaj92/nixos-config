@@ -28,6 +28,7 @@ in
     gdbm
     go-task
     htop
+    infra
     ipcalc
     jq
     jqp
@@ -73,6 +74,7 @@ in
     LC_ALL = "en_US.UTF-8";
     EDITOR = "nvim";
     PAGER = "less -FirSwX";
+    INFRA_SKIP_VERSION_CHECK = "true";
   };
 
   #---------------------------------------------------------------------
