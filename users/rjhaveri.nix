@@ -34,22 +34,22 @@
     ];
 
     casks = [
-       "dropbox"
+       "1password"
        "alfred"
+       "brave-browser"
+       "dropbox"
+       "font-hack-nerd-font"
        "iterm2"
        "rectangle"
-       "brave-browser"
-       "1password"
-       "font-hack-nerd-font"
        "spotify"
     ];
 
     masApps = {
-      "Wireguard" = 1451685025;
-      "Tailscale" = 1475387142;
       "Lightshot Screenshot" = 526298438;
-      "WhatsApp Desktop" = 1147396723;
+      "Tailscale" = 1475387142;
       "Tickbar" = 1666870677;
+      "WhatsApp Desktop" = 1147396723;
+      "Wireguard" = 1451685025;
     };
   };
 

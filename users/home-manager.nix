@@ -2,6 +2,13 @@
 
 let
   isDarwin = pkgs.stdenv.isDarwin;
+  # infra_pkgs = import (builtins.fetchGit {
+  #     # Descriptive name to make the store path easier to identify
+  #     name = "infra_0_20";
+  #     url = "https://github.com/NixOS/nixpkgs/";
+  #     ref = "refs/heads/nixpkgs-unstable";
+  #     rev = "3c3b3ab88a34ff8026fc69cb78febb9ec9aedb16";
+  # }) { inherit (pkgs) system; };
 in
 {
   home.stateVersion = "23.05";
@@ -82,14 +89,16 @@ in
       share = true;
       size = 100000;
     };
-    
+
     historySubstringSearch = {
       enable = true;
     };
 
     localVariables = {
-      PATH = "/opt/homebrew/bin:/opt/homebrew/sbin:$PATH";
+      PATH = "/Users/rjhaveri/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH";
     };
+
+    envExtra = "GEOMETRY_RPROMPT=(geometry_git geometry_jobs geometry_echo)";
 
     shellAliases = {
       vi = "nvim";
