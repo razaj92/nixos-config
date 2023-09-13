@@ -72,6 +72,82 @@ in
   # Programs
   #---------------------------------------------------------------------
 
+  programs.zsh = {
+    enable = true;
+    enableAutosuggestions = true;
+    enableCompletion = true;
+
+    history = {
+      save = 100000;
+      share = true;
+      size = 100000;
+    };
+    
+    historySubstringSearch = {
+      enable = true;
+    };
+
+    localVariables = {
+      PATH = "/opt/homebrew/bin:/opt/homebrew/sbin:$PATH";
+    };
+
+    shellAliases = {
+      vi = "nvim";
+      grepnc = "grep -v '^$\|^\s*\#'";
+      td = "ultralist";
+      kctx = "kubectx";
+      kns = "kubens";
+      lzd = "lazydocker";
+      docker = "nerdctl";
+      lzg = "lazygit";
+      kk = "kubectl get po";
+      kkk = "kubectl get po -A";
+      weather = "curl wttr.in";
+      temp = "sudo powermetrics --samplers smc |grep -i \"CPU die temperature\"";
+      psk = "ps -ax | fzf | cut -d \" \" -f1 | xargs -o kill";
+      gpro = "git pull --rebase origin";
+      ".." = "cd ..";
+      "..." = "cd ../../";
+      "...." = "cd ../../../";
+      "....." = "cd ../../../../";
+      ls = "lsd";
+      l = "ls -l";
+      la = "ls -a";
+      lla = "ls -la";
+      lt = "ls --tree";
+    };
+
+    plugins = [
+      {
+        name = "zsh-syntax-highlighting";
+        src = pkgs.fetchFromGitHub {
+          owner = "zsh-users";
+          repo = "zsh-syntax-highlighting";
+          rev = "143b25eb98aa3227af63bd7f04413e1b3e7888ec";
+          sha256 = null;
+        };
+      }
+      {
+        name = "geometry";
+        src = pkgs.fetchFromGitHub {
+          owner = "geometry-zsh";
+          repo = "geometry";
+          rev = "6825dede0fa496ac724aabaf7916c6f1cb6a5292";
+          sha256 = null;
+        };
+      }
+    ];
+
+    oh-my-zsh = {
+      enable = true;
+      custom = "$HOME/.zsh";
+      plugins = [
+        "docker aws git common-aliases fzf fancy-ctrl-z"
+      ];
+    };
+  };
+
+
   programs.direnv = {
     enable = true;
 
@@ -111,4 +187,13 @@ in
   programs.go = {
     enable = true;
   };
+
+  programs.fzf = {
+    enable = true;
+    defaultCommand = "fd --type f";
+    defaultOptions = ["--bind=\'ctrl-o:execute-silent(atom{})+abort\'"];
+  };
+
+
+
 }
