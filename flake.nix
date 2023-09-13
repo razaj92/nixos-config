@@ -13,16 +13,23 @@
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    nix-homebrew.url = "github:zhaofengli-wip/nix-homebrew";
+    homebrew-cask-fonts = {
+      url = "github:homebrew/homebrew-cask-fonts";
+      flake = false;
+    };
+
   };
 
-  outputs = { self, nixpkgs, home-manager, darwin, ... }@inputs:
+  outputs = { self, nixpkgs, home-manager, nix-homebrew, homebrew-cask-fonts, darwin, ... }@inputs:
     let
       mkDarwin = import ./lib/mkdarwin.nix;
     in
     {
       darwinConfigurations.fastlybook = mkDarwin "fastlybook" {
-        inherit darwin nixpkgs home-manager;
-        system = "x86_64-darwin";
+        inherit darwin nixpkgs nix-homebrew homebrew-cask-fonts home-manager;
+        system = "aarch64-darwin";
         user = "rjhaveri";
       };
     };
