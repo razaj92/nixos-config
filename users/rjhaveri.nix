@@ -40,6 +40,7 @@
        "dropbox"
        "font-hack-nerd-font"
        "iterm2"
+       "keybase"
        "rectangle"
        "spotify"
     ];
