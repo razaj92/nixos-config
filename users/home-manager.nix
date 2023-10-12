@@ -22,9 +22,13 @@ in
     conftest
     coreutils-full
     dive
+    colima
+    docker
     docutils
     exa
     fd
+    fluxcd
+    fx
     gdbm
     go-task
     htop
@@ -35,6 +39,7 @@ in
     k9s
     kops
     krew
+    kubectl
     kubectx
     kubent
     kubetail
@@ -49,7 +54,9 @@ in
     tmux
     tree
     tree-sitter
+    trivy
     vault
+    vagrant
     watch
     yq
     zoxide
@@ -68,6 +75,13 @@ in
   # Env vars and dotfiles
   #---------------------------------------------------------------------
 
+  home.sessionPath = [
+    "$HOME/bin"
+    "/opt/homebrew/bin"
+    "/opt/homebrew/sbin"
+    "$HOME/.krew/bin"
+  ];
+
   home.sessionVariables = {
     LANG = "en_US.UTF-8";
     LC_CTYPE = "en_US.UTF-8";
@@ -85,22 +99,22 @@ in
     enable = true;
     enableAutosuggestions = true;
     enableCompletion = true;
+    autocd = true;
 
     history = {
       save = 100000;
       share = true;
       size = 100000;
+      expireDuplicatesFirst = true;
     };
 
     historySubstringSearch = {
       enable = true;
     };
 
-    localVariables = {
-      PATH = "/Users/rjhaveri/bin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH";
-    };
-
     envExtra = "GEOMETRY_RPROMPT=(geometry_git geometry_jobs geometry_echo)";
+
+    initExtra = "test -e \"\${HOME}/.iterm2_shell_integration.zsh\" && source \"\${HOME}/.iterm2_shell_integration.zsh\"";
 
     shellAliases = {
       vi = "nvim";
@@ -109,9 +123,9 @@ in
       kctx = "kubectx";
       kns = "kubens";
       lzd = "lazydocker";
-      docker = "nerdctl";
       lzg = "lazygit";
       kk = "kubectl get po";
+      kky = "ky get po";
       kkk = "kubectl get po -A";
       weather = "curl wttr.in";
       temp = "sudo powermetrics --samplers smc |grep -i \"CPU die temperature\"";
@@ -153,7 +167,7 @@ in
       enable = true;
       custom = "$HOME/.zsh";
       plugins = [
-        "docker aws git common-aliases fzf fancy-ctrl-z"
+        "docker aws kubectl git common-aliases fzf fancy-ctrl-z z"
       ];
     };
   };

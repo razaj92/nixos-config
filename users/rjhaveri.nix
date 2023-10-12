@@ -9,13 +9,11 @@
       "ca-certificates"
       "cmake"
       "findutils"
-      "flux"
       "git-delta"
       "gnupg"
       "gnutls"
       "helm"
       "jsonlint"
-      "kubernetes-cli"
       "linkerd"
       "lua"
       "mackup"
@@ -30,6 +28,7 @@
       "tfenv"
       "wget"
       "xz"
+      "yh"
       "z"
     ];
 
@@ -41,8 +40,11 @@
        "font-hack-nerd-font"
        "iterm2"
        "keybase"
+       "maccy"
+       "numi"
        "rectangle"
        "spotify"
+       "wireshark"
     ];
 
     masApps = {
