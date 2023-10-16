@@ -43,7 +43,6 @@ in
     kubectx
     kubent
     kubetail
-    lsd
     neovim
     niv
     ripgrep
@@ -135,11 +134,6 @@ in
       "..." = "cd ../../";
       "...." = "cd ../../../";
       "....." = "cd ../../../../";
-      ls = "lsd";
-      l = "ls -l";
-      la = "ls -a";
-      lla = "ls -la";
-      lt = "ls --tree";
     };
 
     plugins = [
@@ -219,6 +213,9 @@ in
     defaultOptions = ["--bind=\'ctrl-o:execute-silent(atom{})+abort\'"];
   };
 
-
+  programs.lsd = {
+    enable = true;
+    enableAliases = true;
+  };
 
 }
