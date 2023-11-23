@@ -113,7 +113,10 @@ in
 
     envExtra = "GEOMETRY_RPROMPT=(geometry_git geometry_jobs geometry_echo)";
 
-    initExtra = "test -e \"\${HOME}/.iterm2_shell_integration.zsh\" && source \"\${HOME}/.iterm2_shell_integration.zsh\"";
+    initExtra = ''
+      test -e "''${HOME}/.iterm2_shell_integration.zsh" && source "''${HOME}/.iterm2_shell_integration.zsh"
+      bindkey '^V^V' edit-command-line
+    '';
 
     shellAliases = {
       vi = "nvim";
