@@ -1,15 +1,24 @@
-name: { darwin, nix-homebrew, homebrew-cask-fonts, nixpkgs, home-manager, system, user }:
+name: { darwin, nix-homebrew, homebrew-cask-fonts, nixpkgs, nixpkgs-unstable, home-manager, system, user }:
+
+let
+  pkgs = import nixpkgs { inherit system; };
+  pkgs-unstable = import nixpkgs-unstable { inherit system; };
+in
+
 
 darwin.lib.darwinSystem rec {
   inherit system;
+  specialArgs = { inherit pkgs-unstable; };
 
   modules = [
     ../machines/${name}.nix
     ../users/${user}.nix
     home-manager.darwinModules.home-manager
     {
+      nixpkgs.config.allowUnfree = true;
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
+      home-manager.extraSpecialArgs = { inherit pkgs-unstable; };
       home-manager.users.${user} = import ../users/home-manager.nix;
     }
     nix-homebrew.darwinModules.nix-homebrew
