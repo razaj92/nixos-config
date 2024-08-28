@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }:
+{ config, lib, pkgs, pkgs-unstable, ... }:
 
 let
   isDarwin = pkgs.stdenv.isDarwin;
@@ -20,30 +20,33 @@ in
     awscli
     bat
     conftest
+    cookiecutter
     coreutils-full
     dive
+    cilium-cli
     colima
     docker
     docutils
-    exa
+    eza
     fd
     fluxcd
     fx
     gdbm
     go-task
+    helmfile
     htop
-    infra
     ipcalc
     jq
     jqp
+    jwt-cli
     k9s
     kops
     krew
-    kubectl
     kubectx
     kubent
     kubetail
-    neovim
+    kyverno
+    pkgs-unstable.neovim
     niv
     ripgrep
     socat
@@ -55,8 +58,8 @@ in
     tree-sitter
     trivy
     vault
-    vagrant
     watch
+    yamllint
     yq
     zoxide
     (google-cloud-sdk.withExtraComponents ([
@@ -79,6 +82,7 @@ in
     "/opt/homebrew/bin"
     "/opt/homebrew/sbin"
     "$HOME/.krew/bin"
+    "$HOME/go/bin"
   ];
 
   home.sessionVariables = {
@@ -111,11 +115,17 @@ in
       enable = true;
     };
 
-    envExtra = "GEOMETRY_RPROMPT=(geometry_git geometry_jobs geometry_echo)";
+    envExtra = ''
+      GEOMETRY_RPROMPT=(geometry_git geometry_jobs geometry_echo)
+    '';
 
     initExtra = ''
       test -e "''${HOME}/.iterm2_shell_integration.zsh" && source "''${HOME}/.iterm2_shell_integration.zsh"
       bindkey '^V^V' edit-command-line
+      # eng-bootstrap
+      export CHEF_LICENSE=accept-silent
+      export KITCHEN_LOCAL_YAML=.kitchen.gce.yml
+      autoload -Uz compinit && compinit; eval "$(chef shell-init zsh)"
     '';
 
     shellAliases = {
@@ -197,8 +207,11 @@ in
       lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
       log = "log --pretty=log";
     };
+    difftastic = {
+      enable = true;
+      background = "dark";
+    };
     extraConfig = {
-      core.pager = "delta";
       color.ui = true;
       pull.rebase = true;
       pretty.log = "C(240)%h%C(reset) -%C(auto)%d%Creset %s %C(242)(%an %ar)";

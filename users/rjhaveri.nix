@@ -4,12 +4,12 @@
   homebrew = {
     enable = true;
     brews = [
+      "adr-tools"
       "ansible"
       "black"
       "ca-certificates"
       "cmake"
       "findutils"
-      "git-delta"
       "gnupg"
       "gnutls"
       "helm"
