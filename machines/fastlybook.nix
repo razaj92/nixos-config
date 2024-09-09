@@ -14,10 +14,6 @@
   environment.systemPackages = with pkgs; [ ];
 
   networking.hostName = "fastlybook";
-  networking.dns = [
-    "1.1.1.1"
-    "1.0.0.1"
-  ];
   networking.knownNetworkServices = [
     "Wi-Fi"
     "Ethernet Adaptor"
