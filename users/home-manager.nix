@@ -22,6 +22,7 @@ in
     conftest
     cookiecutter
     coreutils-full
+    cargo
     dive
     cilium-cli
     colima
@@ -47,6 +48,7 @@ in
     kubetail
     kyverno
     pkgs-unstable.neovim
+    pssh
     niv
     ripgrep
     socat
@@ -83,6 +85,7 @@ in
     "/opt/homebrew/sbin"
     "$HOME/.krew/bin"
     "$HOME/go/bin"
+    "$HOME/.chefdk/gem/ruby/2.6.0/bin"
   ];
 
   home.sessionVariables = {
@@ -100,7 +103,7 @@ in
 
   programs.zsh = {
     enable = true;
-    enableAutosuggestions = true;
+    autosuggestion.enable = true;
     enableCompletion = true;
     autocd = true;
 

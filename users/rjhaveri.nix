@@ -9,6 +9,7 @@
       "black"
       "ca-certificates"
       "cmake"
+      "dagger"
       "findutils"
       "gnupg"
       "gnutls"
