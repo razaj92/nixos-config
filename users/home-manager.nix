@@ -18,7 +18,6 @@ in
   #---------------------------------------------------------------------
   home.packages = with pkgs;[
     awscli
-    bat
     conftest
     cookiecutter
     coreutils-full
@@ -28,9 +27,7 @@ in
     colima
     docker
     docutils
-    eza
     fd
-    fluxcd
     fx
     gdbm
     go-task
@@ -40,7 +37,6 @@ in
     jq
     jqp
     jwt-cli
-    k9s
     kops
     krew
     kubectx
@@ -85,7 +81,6 @@ in
     "/opt/homebrew/sbin"
     "$HOME/.krew/bin"
     "$HOME/go/bin"
-    "$HOME/.chefdk/gem/ruby/2.6.0/bin"
   ];
 
   home.sessionVariables = {
@@ -95,6 +90,7 @@ in
     EDITOR = "nvim";
     PAGER = "less -FirSwX";
     INFRA_SKIP_VERSION_CHECK = "true";
+    KUBECOLOR_OBJ_FRESH="30m";
   };
 
   #---------------------------------------------------------------------
@@ -112,6 +108,8 @@ in
       share = true;
       size = 100000;
       expireDuplicatesFirst = true;
+      extended = true;
+      ignoreAllDups = true;
     };
 
     historySubstringSearch = {
@@ -128,7 +126,17 @@ in
       # eng-bootstrap
       export CHEF_LICENSE=accept-silent
       export KITCHEN_LOCAL_YAML=.kitchen.gce.yml
-      autoload -Uz compinit && compinit; eval "$(chef shell-init zsh)"
+      autoload -Uz compinit && compinit;
+      find ~/.chef-shell-init.zsh -mtime +1d -delete > /dev/null 2>&1
+      if [ ! -f ~/.chef-shell-init.zsh ]
+      then
+        cinc shell-init zsh > ~/.chef-shell-init.zsh
+      fi
+      source ~/.chef-shell-init.zsh
+      # others
+      compdef kubecolor=kubectl
+      # opts
+      setopt INC_APPEND_HISTORY
     '';
 
     shellAliases = {
@@ -137,6 +145,7 @@ in
       td = "ultralist";
       kctx = "kubectx";
       kns = "kubens";
+      kubectl = "kubecolor";
       lzd = "lazydocker";
       lzg = "lazygit";
       kk = "kubectl get po";
@@ -182,6 +191,9 @@ in
     };
   };
 
+  programs.bat = {
+    enable = true;
+  };
 
   programs.direnv = {
     enable = true;
@@ -237,4 +249,11 @@ in
     enableAliases = true;
   };
 
+  programs.k9s = {
+    enable = true;
+  };
+
+  programs.mr = {
+    enable = true;
+  };
 }
