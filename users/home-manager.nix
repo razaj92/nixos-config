@@ -34,6 +34,7 @@ in
     helmfile
     htop
     ipcalc
+    istioctl
     jq
     jqp
     jwt-cli
@@ -51,6 +52,7 @@ in
     step-cli
     stern
     tflint
+    tilt
     tmux
     tree
     tree-sitter
@@ -89,6 +91,7 @@ in
     LC_ALL = "en_US.UTF-8";
     EDITOR = "nvim";
     PAGER = "less -FirSwX";
+    XDG_CONFIG_HOME = "$HOME/.config";
     INFRA_SKIP_VERSION_CHECK = "true";
     KUBECOLOR_OBJ_FRESH="30m";
   };
@@ -122,6 +125,11 @@ in
 
     initExtra = ''
       test -e "''${HOME}/.iterm2_shell_integration.zsh" && source "''${HOME}/.iterm2_shell_integration.zsh"
+      iterm2_print_user_vars() {
+        iterm2_set_user_var kubecluster $(kubectx -c)
+        iterm2_set_user_var kubens $(kubens -c)
+        iterm2_set_user_var kube "☸"
+      }
       bindkey '^V^V' edit-command-line
       # eng-bootstrap
       export CHEF_LICENSE=accept-silent
@@ -176,7 +184,7 @@ in
         src = pkgs.fetchFromGitHub {
           owner = "geometry-zsh";
           repo = "geometry";
-          rev = "6825dede0fa496ac724aabaf7916c6f1cb6a5292";
+          rev = "0f82c567db277024f340b5854a646094d194a31f";
           sha256 = null;
         };
       }
@@ -227,10 +235,21 @@ in
       background = "dark";
     };
     extraConfig = {
+      branch.sort = "committerdate";
       color.ui = true;
-      pull.rebase = true;
-      pretty.log = "C(240)%h%C(reset) -%C(auto)%d%Creset %s %C(242)(%an %ar)";
+      column.ui = "auto";
+      diff.algorithm = "histogram";
+      diff.colorMoved = "plain";
+      fetch.all = "true";
+      fetch.prune = "true";
+      fetch.pruneTags = "true";
+      help.autocorrect = "prompt";
       init.defaultBranch = "main";
+      pretty.log = "C(240)%h%C(reset) -%C(auto)%d%Creset %s %C(242)(%an %ar)";
+      pull.rebase = true;
+      push.autoSetupRemote = "true";
+      rebase.updateRefs = "true";
+      tag.sort = "version:refname";
     };
   };
 
