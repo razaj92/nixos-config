@@ -15,6 +15,7 @@ darwin.lib.darwinSystem rec {
     ../users/${user}.nix
     home-manager.darwinModules.home-manager
     {
+      system.stateVersion = 5;
       nixpkgs.config.allowUnfree = true;
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;

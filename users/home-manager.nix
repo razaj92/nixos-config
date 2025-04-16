@@ -43,7 +43,7 @@ in
     kubectx
     kubent
     kubetail
-    kyverno
+    pkgs-unstable.kyverno
     pkgs-unstable.neovim
     pssh
     niv
