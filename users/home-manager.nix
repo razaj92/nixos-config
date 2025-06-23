@@ -17,7 +17,7 @@ in
   # Packages
   #---------------------------------------------------------------------
   home.packages = with pkgs;[
-    awscli
+    awscli2
     conftest
     cookiecutter
     coreutils-full
