@@ -1,6 +1,6 @@
 .PHONEY: switch
 switch: ## nix build and switch.
-	nix build ".#darwinConfigurations.fastlybook.system" --impure
+	NIXPKGS_ALLOW_UNFREE=1 nix build ".#darwinConfigurations.fastlybook.system" --impure
 	./result/sw/bin/darwin-rebuild switch --flake "$$(pwd)#fastlybook"
 
 .PHONY: help

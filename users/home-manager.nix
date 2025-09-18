@@ -38,7 +38,6 @@ in
     jq
     jqp
     jwt-cli
-    kops
     krew
     kubectx
     kubent
@@ -83,6 +82,7 @@ in
     "/opt/homebrew/sbin"
     "$HOME/.krew/bin"
     "$HOME/go/bin"
+    "$HOME/.local/bin"
   ];
 
   home.sessionVariables = {
@@ -163,6 +163,8 @@ in
       temp = "sudo powermetrics --samplers smc |grep -i \"CPU die temperature\"";
       psk = "ps -ax | fzf | cut -d \" \" -f1 | xargs -o kill";
       gpro = "git pull --rebase origin";
+      kgpuse = "kubectl get pods -o custom-columns=\"POD:.metadata.name,CPU_REQUEST:.spec.containers[*].resources.requests.cpu,MEMORY_REQUEST:.spec.containers[*].resources.requests.memory\"";
+      kgpzone = "kubectl get pods -o custom-columns=\"NAMESPACE:.metadata.namespace,NAME:.metadata.name,ZONE:.metadata.annotations.topology\.kubernetes\.io/zone\"  | sort -k3 | uniq -c -f2";
       ".." = "cd ..";
       "..." = "cd ../../";
       "...." = "cd ../../../";

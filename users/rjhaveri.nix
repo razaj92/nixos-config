@@ -30,6 +30,7 @@
       "terraform-docs"
       "tfenv"
       "tldr"
+      "uv"
       "wget"
       "xz"
       "yh"
@@ -49,12 +50,13 @@
        "rectangle"
        "spotify"
        "wireshark"
+      "1password-cli"
+      "raycast"
     ];
 
     masApps = {
       "Lightshot Screenshot" = 526298438;
       "Tailscale" = 1475387142;
-      "Tickbar" = 1666870677;
       "WhatsApp Desktop" = 1147396723;
       "Wireguard" = 1451685025;
     };
