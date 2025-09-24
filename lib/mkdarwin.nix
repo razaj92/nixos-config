@@ -1,4 +1,4 @@
-name: { darwin, nix-homebrew, homebrew-cask-fonts, nixpkgs, nixpkgs-unstable, home-manager, system, user }:
+name: { darwin, nix-homebrew, nixpkgs, nixpkgs-unstable, home-manager, system, user }:
 
 let
   pkgs = import nixpkgs { inherit system; };
@@ -31,9 +31,7 @@ darwin.lib.darwinSystem rec {
             enableRosetta = true;
             autoMigrate = true;
 
-            taps = {
-                "homebrew/homebrew-cask-fonts" = homebrew-cask-fonts;
-            };
+            taps = {};
           };
      }
 

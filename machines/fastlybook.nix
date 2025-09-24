@@ -1,5 +1,5 @@
 { config, pkgs, ... }: {
-  nix.useDaemon = true;
+  nix.enable = false;
 
   programs.zsh.enable = true;
   programs.zsh.shellInit = ''

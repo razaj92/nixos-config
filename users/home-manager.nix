@@ -2,13 +2,6 @@
 
 let
   isDarwin = pkgs.stdenv.isDarwin;
-  # infra_pkgs = import (builtins.fetchGit {
-  #     # Descriptive name to make the store path easier to identify
-  #     name = "infra_0_20";
-  #     url = "https://github.com/NixOS/nixpkgs/";
-  #     ref = "refs/heads/nixpkgs-unstable";
-  #     rev = "3c3b3ab88a34ff8026fc69cb78febb9ec9aedb16";
-  # }) { inherit (pkgs) system; };
 in
 {
   home.stateVersion = "23.05";
@@ -39,9 +32,11 @@ in
     jqp
     jwt-cli
     krew
+    kubectl
     kubectx
     kubent
     kubetail
+    obsidian
     pkgs-unstable.kyverno
     pkgs-unstable.neovim
     pssh
@@ -65,12 +60,6 @@ in
       google-cloud-sdk.components.gke-gcloud-auth-plugin
     ]))
   ];
-
-  # home.file = {
-  #   neovim.source = config.lib.file.mkOutOfStoreSymlink /Users/rjhaveri/.nix-profile/bin/nvim;
-  #   neovim.target = "/usr/local/bin/vi";
-  # };
-
 
   #---------------------------------------------------------------------
   # Env vars and dotfiles
@@ -123,7 +112,7 @@ in
       GEOMETRY_RPROMPT=(geometry_git geometry_jobs geometry_echo)
     '';
 
-    initExtra = ''
+    initContent = ''
       test -e "''${HOME}/.iterm2_shell_integration.zsh" && source "''${HOME}/.iterm2_shell_integration.zsh"
       iterm2_print_user_vars() {
         iterm2_set_user_var kubecluster $(kubectx -c)
@@ -178,7 +167,7 @@ in
           owner = "zsh-users";
           repo = "zsh-syntax-highlighting";
           rev = "143b25eb98aa3227af63bd7f04413e1b3e7888ec";
-          sha256 = null;
+          sha256 = "sha256-2c673dfd7month9InOZT3AjkP/Mh5iLF/3CT7W5dXJiw=";
         };
       }
       {
@@ -187,7 +176,7 @@ in
           owner = "geometry-zsh";
           repo = "geometry";
           rev = "0f82c567db277024f340b5854a646094d194a31f";
-          sha256 = null;
+          sha256 = "sha256-hD/I5ktspDCldsolcNKprKdOzpBvWLcRtZ3tZ0gVcns=";
         };
       }
     ];
@@ -196,7 +185,14 @@ in
       enable = true;
       custom = "$HOME/.zsh";
       plugins = [
-        "docker aws kubectl git common-aliases fzf fancy-ctrl-z z"
+        "docker"
+        "aws"
+        "kubectl"
+        "git"
+        "common-aliases"
+        "fzf"
+        "fancy-ctrl-z"
+        "z"
       ];
     };
   };
@@ -267,7 +263,6 @@ in
 
   programs.lsd = {
     enable = true;
-    enableAliases = true;
   };
 
   programs.k9s = {

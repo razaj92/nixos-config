@@ -1,6 +1,8 @@
 { pkgs, ... }:
 
 {
+  system.primaryUser = "rjhaveri";
+
   homebrew = {
     enable = true;
     brews = [
@@ -23,7 +25,6 @@
       "mkdocs"
       "mtr"
       "nmap"
-      "packer"
       "pygments"
       "speedtest-cli"
       "sshuttle"
@@ -38,8 +39,6 @@
     ];
 
     casks = [
-       "1password"
-       "alfred"
        "brave-browser"
        "dropbox"
        "font-hack-nerd-font"
@@ -50,14 +49,15 @@
        "rectangle"
        "spotify"
        "wireshark"
-      "1password-cli"
-      "raycast"
+       "1password-cli"
+       "raycast"
     ];
 
     masApps = {
       "Lightshot Screenshot" = 526298438;
+      "Slack" = 803453959;
       "Tailscale" = 1475387142;
-      "WhatsApp Desktop" = 1147396723;
+      "WhatsApp Messenger" = 310633997;
       "Wireguard" = 1451685025;
     };
   };
