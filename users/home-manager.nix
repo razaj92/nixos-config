@@ -37,6 +37,7 @@ in
     kubent
     kubetail
     obsidian
+    pkgs-unstable.kubectl-klock
     pkgs-unstable.kyverno
     pkgs-unstable.neovim
     pssh
@@ -92,6 +93,7 @@ in
   programs.zsh = {
     enable = true;
     autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
     enableCompletion = true;
     autocd = true;
 
@@ -162,24 +164,23 @@ in
 
     plugins = [
       {
-        name = "zsh-syntax-highlighting";
-        src = pkgs.fetchFromGitHub {
-          owner = "zsh-users";
-          repo = "zsh-syntax-highlighting";
-          rev = "143b25eb98aa3227af63bd7f04413e1b3e7888ec";
-          sha256 = "sha256-2c673dfd7month9InOZT3AjkP/Mh5iLF/3CT7W5dXJiw=";
-        };
-      }
-      {
         name = "geometry";
         src = pkgs.fetchFromGitHub {
           owner = "geometry-zsh";
           repo = "geometry";
           rev = "0f82c567db277024f340b5854a646094d194a31f";
-          sha256 = "sha256-hD/I5ktspDCldsolcNKprKdOzpBvWLcRtZ3tZ0gVcns=";
+          sha256 = "sha256-FoOY7dkeYC7xQJkX06IDZdduXCfpDxB2aHoSludAMbI=";
         };
       }
     ];
+
+    zsh-abbr = {
+      enable = true;
+      globalAbbreviations = {
+        G = "| grep";
+        L = "| less -R";
+      };
+    };
 
     oh-my-zsh = {
       enable = true;
