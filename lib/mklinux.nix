@@ -10,7 +10,7 @@ home-manager.lib.homeManagerConfiguration {
   extraSpecialArgs = { inherit pkgs-unstable; };
 
   modules = [
-    ../machines/${name}.nix
-    ../users/home-manager.nix
+    ../machines/${name}/home.nix
+    ../users/${user}.nix
   ];
 }

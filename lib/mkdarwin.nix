@@ -11,8 +11,7 @@ darwin.lib.darwinSystem rec {
   specialArgs = { inherit pkgs-unstable; };
 
   modules = [
-    ../machines/${name}.nix
-    ../users/${user}.nix
+    ../machines/${name}/system.nix
     home-manager.darwinModules.home-manager
     {
       system.stateVersion = 5;
@@ -20,7 +19,12 @@ darwin.lib.darwinSystem rec {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
       home-manager.extraSpecialArgs = { inherit pkgs-unstable; };
-      home-manager.users.${user} = import ../users/home-manager.nix;
+      home-manager.users.${user} = {
+        imports = [
+          ../machines/${name}/home.nix
+          ../users/${user}.nix
+        ];
+      };
     }
     nix-homebrew.darwinModules.nix-homebrew
     {
