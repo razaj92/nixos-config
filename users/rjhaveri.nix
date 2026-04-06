@@ -14,6 +14,7 @@
       "coreutils"
       "dagger"
       "findutils"
+      "gh"
       "gnupg"
       "gnutls"
       "helm"

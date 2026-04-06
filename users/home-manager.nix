@@ -55,6 +55,7 @@ in
     vault
     watch
     yamllint
+    yarn-berry
     yq
     zoxide
     (google-cloud-sdk.withExtraComponents ([
@@ -208,7 +209,7 @@ in
     config = {
       whitelist = {
         prefix = [
-          "/Users/rjhaveri/Github/"
+          "/Users/rjhaveri/github/"
         ];
       };
     };
