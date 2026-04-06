@@ -17,7 +17,6 @@ in
     cargo
     dive
     cilium-cli
-    colima
     docker
     docutils
     fd
@@ -61,6 +60,8 @@ in
     (google-cloud-sdk.withExtraComponents ([
       google-cloud-sdk.components.gke-gcloud-auth-plugin
     ]))
+  ] ++ lib.optionals isDarwin [
+    colima
   ];
 
   #---------------------------------------------------------------------
@@ -69,11 +70,12 @@ in
 
   home.sessionPath = [
     "$HOME/bin"
-    "/opt/homebrew/bin"
-    "/opt/homebrew/sbin"
     "$HOME/.krew/bin"
     "$HOME/go/bin"
     "$HOME/.local/bin"
+  ] ++ lib.optionals isDarwin [
+    "/opt/homebrew/bin"
+    "/opt/homebrew/sbin"
   ];
 
   home.sessionVariables = {
@@ -115,29 +117,34 @@ in
       GEOMETRY_RPROMPT=(geometry_git geometry_jobs geometry_echo)
     '';
 
-    initContent = ''
-      test -e "''${HOME}/.iterm2_shell_integration.zsh" && source "''${HOME}/.iterm2_shell_integration.zsh"
-      iterm2_print_user_vars() {
-        iterm2_set_user_var kubecluster $(kubectx -c)
-        iterm2_set_user_var kubens $(kubens -c)
-        iterm2_set_user_var kube "☸"
-      }
-      bindkey '^V^V' edit-command-line
-      # eng-bootstrap
-      export CHEF_LICENSE=accept-silent
-      export KITCHEN_LOCAL_YAML=.kitchen.gce.yml
-      autoload -Uz compinit && compinit;
-      find ~/.chef-shell-init.zsh -mtime +1d -delete > /dev/null 2>&1
-      if [ ! -f ~/.chef-shell-init.zsh ]
-      then
-        cinc shell-init zsh > ~/.chef-shell-init.zsh
-      fi
-      source ~/.chef-shell-init.zsh
-      # others
-      compdef kubecolor=kubectl
-      # opts
-      setopt INC_APPEND_HISTORY
-    '';
+    initContent = lib.concatStringsSep "\n" ([
+      ''
+        bindkey '^V^V' edit-command-line
+        # eng-bootstrap
+        export CHEF_LICENSE=accept-silent
+        export KITCHEN_LOCAL_YAML=.kitchen.gce.yml
+        autoload -Uz compinit && compinit;
+        find ~/.chef-shell-init.zsh -mtime +1d -delete > /dev/null 2>&1
+        if [ ! -f ~/.chef-shell-init.zsh ]
+        then
+          cinc shell-init zsh > ~/.chef-shell-init.zsh
+        fi
+        source ~/.chef-shell-init.zsh
+        # others
+        compdef kubecolor=kubectl
+        # opts
+        setopt INC_APPEND_HISTORY
+      ''
+    ] ++ lib.optionals isDarwin [
+      ''
+        test -e "''${HOME}/.iterm2_shell_integration.zsh" && source "''${HOME}/.iterm2_shell_integration.zsh"
+        iterm2_print_user_vars() {
+          iterm2_set_user_var kubecluster $(kubectx -c)
+          iterm2_set_user_var kubens $(kubens -c)
+          iterm2_set_user_var kube "☸"
+        }
+      ''
+    ]);
 
     shellAliases = {
       vi = "nvim";
@@ -152,7 +159,6 @@ in
       kky = "ky get po";
       kkk = "kubectl get po -A";
       weather = "curl wttr.in";
-      temp = "sudo powermetrics --samplers smc |grep -i \"CPU die temperature\"";
       psk = "ps -ax | fzf | cut -d \" \" -f1 | xargs -o kill";
       gpro = "git pull --rebase origin";
       kgpuse = "kubectl get pods -o custom-columns=\"POD:.metadata.name,CPU_REQUEST:.spec.containers[*].resources.requests.cpu,MEMORY_REQUEST:.spec.containers[*].resources.requests.memory\"";
@@ -161,6 +167,8 @@ in
       "..." = "cd ../../";
       "...." = "cd ../../../";
       "....." = "cd ../../../../";
+    } // lib.optionalAttrs isDarwin {
+      temp = "sudo powermetrics --samplers smc |grep -i \"CPU die temperature\"";
     };
 
     plugins = [
@@ -209,7 +217,7 @@ in
     config = {
       whitelist = {
         prefix = [
-          "/Users/rjhaveri/github/"
+          "${config.home.homeDirectory}/github/"
         ];
       };
     };
