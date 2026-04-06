@@ -24,11 +24,18 @@
   outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, nix-homebrew, darwin, ... }@inputs:
     let
       mkDarwin = import ./lib/mkdarwin.nix;
+      mkLinux = import ./lib/mklinux.nix;
     in
     {
       darwinConfigurations.fastlybook = mkDarwin "fastlybook" {
         inherit darwin nixpkgs nixpkgs-unstable nix-homebrew home-manager;
         system = "aarch64-darwin";
+        user = "rjhaveri";
+      };
+
+      homeConfigurations.jhaveribox = mkLinux "jhaveribox" {
+        inherit nixpkgs nixpkgs-unstable home-manager;
+        system = "x86_64-linux";
         user = "rjhaveri";
       };
     };
