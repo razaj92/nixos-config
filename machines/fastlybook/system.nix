@@ -36,6 +36,7 @@
       "gnupg"
       "gnutls"
       "helm"
+      "herdr"
       "jsonlint"
       "kubecolor"
       "linkerd"
@@ -45,6 +46,7 @@
       "mtr"
       "nmap"
       "pygments"
+      "ruby"
       "speedtest-cli"
       "sshuttle"
       "terraform-docs"
@@ -59,15 +61,13 @@
 
     casks = [
        "brave-browser"
-       "dropbox"
        "font-hack-nerd-font"
        "iterm2"
        "keybase"
        "maccy"
-       "numi"
-       "rectangle"
        "spotify"
-       "wireshark"
+       "supacode"
+       "wireshark-app"
        "1password-cli"
        "raycast"
     ];

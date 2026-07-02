@@ -30,6 +30,7 @@ in
     jq
     jqp
     jwt-cli
+    kind
     krew
     kubectl
     kubectx
@@ -134,6 +135,22 @@ in
         compdef kubecolor=kubectl
         # opts
         setopt INC_APPEND_HISTORY
+        # functions
+        kpod() {
+          local image="$1"
+          local name="''${2:-mypod}"
+          kubectl run "$name" --image="$image" \
+            --overrides='{"spec":{"imagePullSecrets":[{"name":"artifacts"}]}}' \
+            --dry-run=client -o yaml
+        }
+
+        kdep() {
+          local image="$1"
+          local name="''${2:-mydep}"
+          kubectl create deployment "$name" --image="$image" \
+            --dry-run=client -o yaml \
+            | yq -y '.spec.template.spec.imagePullSecrets=[{"name":"artifacts"}]'
+        }
       ''
     ] ++ lib.optionals isDarwin [
       ''
@@ -225,24 +242,20 @@ in
 
   programs.git = {
     enable = true;
-    userName = "Raza Jhaveri";
-    userEmail = "razajhaveri@googlemail.com";
     signing = {
       key = "2607C831ABF72900";
     };
-    aliases = {
-      cb = "checkout -b";
-      bd = "branch -D";
-      rho = "reset --hard ORIGIN";
-      changes = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %Cblue\\ [%cn]' --abbrev-commit --date=relative";
-      lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
-      log = "log --pretty=log";
-    };
-    difftastic = {
-      enable = true;
-      background = "dark";
-    };
-    extraConfig = {
+    settings = {
+      user.name = "Raza Jhaveri";
+      user.email = "razajhaveri@googlemail.com";
+      alias = {
+        cb = "checkout -b";
+        bd = "branch -D";
+        rho = "reset --hard ORIGIN";
+        changes = "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr)%Creset %Cblue\\ [%cn]' --abbrev-commit --date=relative";
+        lg = "log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit";
+        log = "log --pretty=log";
+      };
       branch.sort = "committerdate";
       color.ui = true;
       column.ui = "auto";
@@ -259,6 +272,12 @@ in
       rebase.updateRefs = "true";
       tag.sort = "version:refname";
     };
+  };
+
+  programs.difftastic = {
+    enable = true;
+    git.enable = true;
+    options.background = "dark";
   };
 
   programs.go = {
