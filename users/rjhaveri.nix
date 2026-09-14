@@ -38,6 +38,7 @@ in
     kubectx
     kubent
     kubetail
+    nerd-fonts.hack
     obsidian
     pkgs-unstable.kubectl-klock
     pkgs-unstable.kyverno
@@ -67,6 +68,11 @@ in
   ] ++ lib.optionals isDarwin [
     colima
   ];
+
+  # Standalone home-manager leaves fontconfig off by default, so linux needs
+  # this for fonts from home.packages to be discoverable. On darwin the fonts
+  # target module copies them into ~/Library/Fonts/HomeManager instead.
+  fonts.fontconfig.enable = !isDarwin;
 
   #---------------------------------------------------------------------
   # Env vars and dotfiles
@@ -311,5 +317,90 @@ in
 
   programs.mr = {
     enable = true;
+  };
+
+  #---------------------------------------------------------------------
+  # Ghostty
+  #
+  # Ported from the hand-written ~/.config/ghostty/config (iTerm2 migration).
+  # nixpkgs splits the package by platform: ghostty is linux-only (GTK4, built
+  # from source), ghostty-bin is darwin-only (the signed upstream .app). Both
+  # are 1.3.1. home-manager writes $XDG_CONFIG_HOME/ghostty/config on both.
+  #
+  # The generator sorts keys alphabetically, so this grouping exists here only.
+  #---------------------------------------------------------------------
+
+  programs.ghostty = {
+    enable = true;
+    package = if isDarwin then pkgs.ghostty-bin else pkgs.ghostty;
+
+    settings = {
+      font-family = "Hack Nerd Font Mono";
+      font-size = 13;
+      font-thicken = true;
+
+      window-padding-x = 0;
+      window-padding-y = 0;
+      window-decoration = true;
+      window-save-state = "always";
+      scrollbar = "never";
+
+      # Opacities are quoted: nix renders the float 0.9 as 0.900000.
+      background-opacity = "0.9";
+      background-blur-radius = 30;
+      unfocused-split-opacity = "0.8";
+
+      cursor-style = "block";
+      cursor-style-blink = false;
+
+      # 256MB per surface, allocated lazily as needed. Ghostty has no unlimited
+      # option; oldest lines drop once the limit is hit.
+      scrollback-limit = 268435456;
+
+      # Base16 Grayscale Dark, carried over from iTerm2
+      foreground = "#d0d0d0";
+      background = "#202020";
+      cursor-color = "#d0d0d0";
+      cursor-text = "#151515";
+      selection-foreground = "#d0d0d0";
+      selection-background = "#303030";
+
+      palette = [
+        "0=#151515"
+        "1=#ac4142"
+        "2=#7e8d50"
+        "3=#e5b567"
+        "4=#6c99ba"
+        "5=#9e4e85"
+        "6=#7dd5cf"
+        "7=#d0d0d0"
+        "8=#505050"
+        "9=#ac4142"
+        "10=#7e8d50"
+        "11=#e5b566"
+        "12=#6c99bb"
+        "13=#9e4e85"
+        "14=#7dd5cf"
+        "15=#f5f5f5"
+      ];
+
+      # cmd is an alias for super, so these map to Super on linux.
+      keybind = [
+        "cmd+d=new_split:right"
+        "cmd+shift+d=new_split:down"
+        "cmd+w=close_surface"
+      ];
+
+      copy-on-select = true;
+      clipboard-read = "ask";
+      clipboard-write = "allow";
+      mouse-hide-while-typing = true;
+      quit-after-last-window-closed = true;
+      shell-integration-features = "cursor,sudo,title,ssh-env,ssh-terminfo,path";
+    } // lib.optionalAttrs isDarwin {
+      macos-option-as-alt = false;
+      macos-titlebar-style = "native";
+      macos-window-shadow = true;
+    };
   };
 }

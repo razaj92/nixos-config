@@ -63,7 +63,6 @@
 
     casks = [
        "brave-browser"
-       "font-hack-nerd-font"
        "iterm2"
        "keybase"
        "maccy"
