@@ -11,6 +11,7 @@ in
   #---------------------------------------------------------------------
   home.packages = with pkgs;[
     awscli2
+    bun
     conftest
     cookiecutter
     coreutils-full
@@ -22,6 +23,7 @@ in
     fd
     fx
     gdbm
+    github-copilot-cli
     go-task
     helmfile
     htop
@@ -40,6 +42,7 @@ in
     pkgs-unstable.kubectl-klock
     pkgs-unstable.kyverno
     pkgs-unstable.neovim
+    pnpm
     pssh
     niv
     ripgrep

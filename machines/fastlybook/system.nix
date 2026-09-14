@@ -26,6 +26,7 @@
     brews = [
       "adr-tools"
       "ansible"
+      "argocd"
       "black"
       "ca-certificates"
       "cmake"
@@ -45,6 +46,7 @@
       "mkdocs"
       "mtr"
       "nmap"
+      "pdsh"
       "pygments"
       "ruby"
       "speedtest-cli"
