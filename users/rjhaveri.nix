@@ -115,7 +115,15 @@ in
     };
 
     envExtra = ''
-      GEOMETRY_RPROMPT=(geometry_git geometry_jobs geometry_echo)
+      GEOMETRY_RPROMPT=(geometry_kube geometry_git geometry_jobs geometry_echo)
+
+      # kube segment: context/namespace only, always shown. Context names here
+      # reach 70+ chars and zsh drops an RPROMPT that does not fit -- taking the
+      # git segment with it -- so keep the distinguishing tail.
+      GEOMETRY_KUBE_SEPARATOR=/
+      GEOMETRY_KUBE_VERSION=false
+      GEOMETRY_KUBE_PIN=true
+      GEOMETRY_KUBE_MAX_CONTEXT_LEN=28
     '';
 
     initContent = lib.concatStringsSep "\n" ([
@@ -192,10 +200,10 @@ in
       {
         name = "geometry";
         src = pkgs.fetchFromGitHub {
-          owner = "geometry-zsh";
+          owner = "razaj92";
           repo = "geometry";
-          rev = "0f82c567db277024f340b5854a646094d194a31f";
-          sha256 = "sha256-FoOY7dkeYC7xQJkX06IDZdduXCfpDxB2aHoSludAMbI=";
+          rev = "7cc9bdf99e090460c00dd0e8f85576f0d862ddc9";
+          sha256 = "sha256-q8EKXB1i7/5Fp3ZUhdef36/CBoE87WFs9vsv4l3xfF0=";
         };
       }
     ];
