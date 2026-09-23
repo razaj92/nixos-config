@@ -288,6 +288,7 @@ in
       push.autoSetupRemote = "true";
       rebase.updateRefs = "true";
       tag.sort = "version:refname";
+      url."git@github.com:fastly/".insteadOf = "https://github.com/fastly/";
     };
   };
 
