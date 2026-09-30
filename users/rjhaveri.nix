@@ -186,7 +186,6 @@ in
       td = "ultralist";
       kctx = "kubectx";
       kns = "kubens";
-      kubectl = "kubecolor";
       lzd = "lazydocker";
       lzg = "lazygit";
       kk = "kubectl get po";
