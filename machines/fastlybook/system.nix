@@ -37,7 +37,6 @@
       "gnupg"
       "gnutls"
       "helm"
-      "herdr"
       "jsonlint"
       "kubecolor"
       "linkerd"

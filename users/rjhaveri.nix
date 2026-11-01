@@ -40,6 +40,7 @@ in
     kubetail
     nerd-fonts.hack
     obsidian
+    pkgs-unstable.herdr
     pkgs-unstable.kubectl-klock
     pkgs-unstable.kyverno
     pkgs-unstable.neovim
@@ -398,9 +399,56 @@ in
       quit-after-last-window-closed = true;
       shell-integration-features = "cursor,sudo,title,ssh-env,ssh-terminfo,path";
     } // lib.optionalAttrs isDarwin {
-      macos-option-as-alt = false;
+      macos-option-as-alt = true;
       macos-titlebar-style = "native";
       macos-window-shadow = true;
     };
+  };
+
+  #---------------------------------------------------------------------
+  # herdr
+  #
+  # Only config.toml is declarative. plugins.json and plugins/ hold absolute
+  # install paths and pinned commits that herdr rewrites on plugin
+  # install/update, so plugins stay herdr-managed. The generated file is
+  # read-only: in-app settings changes won't persist, and `herdr update`
+  # can't replace the store binary; bump nixpkgs-unstable instead.
+  #---------------------------------------------------------------------
+
+  xdg.configFile."herdr/config.toml".source = (pkgs.formats.toml { }).generate "herdr-config.toml" {
+    onboarding = false;
+
+    experimental.pane_history = true;
+
+    theme = {
+      name = "vesper";
+      auto_switch = false;
+    };
+
+    ui = {
+      status_indicators = "symbols";
+      toast.delivery = "terminal";
+    };
+
+    keys.command = [
+      {
+        key = "prefix+k";
+        type = "plugin_action";
+        command = "herdr-bar.open";
+        description = "command bar";
+      }
+      {
+        key = "cmd+p";
+        type = "plugin_action";
+        command = "herdr-sidebar.open-sidebar";
+        description = "toggle sidebar";
+      }
+      {
+        key = "prefix+m";
+        type = "plugin_action";
+        command = "ray.plugin-manager.open";
+        description = "open plugin manager";
+      }
+    ];
   };
 }
