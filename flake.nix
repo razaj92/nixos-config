@@ -38,6 +38,12 @@
         system = "x86_64-linux";
         user = "rjhaveri";
       };
+
+      homeConfigurations.rjhaveri-agent = mkLinux "rjhaveri-agent" {
+        inherit nixpkgs nixpkgs-unstable home-manager;
+        system = "x86_64-linux";
+        user = "rjhaveri";
+      };
     };
 
 }
