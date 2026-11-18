@@ -169,6 +169,12 @@ in
             --dry-run=client -o yaml \
             | yq -y '.spec.template.spec.imagePullSecrets=[{"name":"artifacts"}]'
         }
+
+        # rex: re-prepend Rex's bin dir, which nix shell init drops from PATH.
+        # Kept last so it stays ahead of entries prepended above (cinc shell-init).
+        if [ -n "$REX_BIN_DIR" ]; then
+          export PATH="$REX_BIN_DIR:$PATH"
+        fi
       ''
     ] ++ lib.optionals isDarwin [
       ''
@@ -197,6 +203,7 @@ in
       gpro = "git pull --rebase origin";
       kgpuse = "kubectl get pods -o custom-columns=\"POD:.metadata.name,CPU_REQUEST:.spec.containers[*].resources.requests.cpu,MEMORY_REQUEST:.spec.containers[*].resources.requests.memory\"";
       kgpzone = "kubectl get pods -o custom-columns=\"NAMESPACE:.metadata.namespace,NAME:.metadata.name,ZONE:.metadata.annotations.topology\.kubernetes\.io/zone\"  | sort -k3 | uniq -c -f2";
+      cos = "claude --agent chief-of-staff --permission-mode auto \"/loop /checkin\"";
       ".." = "cd ..";
       "..." = "cd ../../";
       "...." = "cd ../../../";
